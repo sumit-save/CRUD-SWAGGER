@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  title: CRUD API WITH SWAGGER UI
+  description: Simple Crud Api Using Express With Swagger Ui
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Local server
+  - url: http://uat.com
+    description: Uat server
+paths:
+
+# Add a new post
+ /post:
+   post:
+    summary: Insert a new post
+    description: API for inserting new post
+    requestBody: 
+     required: true
+     content: 
+      application/json:
+       schema: 
+        $ref: '#/components/schemas/postData' # <------
+      responses:
+      '200': 
+       description: OK
+      '400': 
+       description: BAD REQUEST  
+
+# Show all posts
+ /posts:
+  get:
+   summary: Fetch all posts
+   description: API for fetching all posts
+   responses:
+    '200': 
+     description: OK
+    '400': 
+     description: BAD REQUEST
+
+ /post/{_id}:
+# Show specific post
+  get:
+   summary: Fetch specific post
+   description: API for fetchig specific post
+   parameters:
+    - name: _id
+      in: path
+      description: Parameter _id as a params field
+      schema: 
+       type: objectId
+       example: 6575ff7c928979300b6853f9 
+   responses:
+    '200': 
+     description: OK
+    '400': 
+     description: BAD REQUEST
+
+# Update specific post
+  put:
+   summary: Modify specific post
+   description: API for updating specific post
+   parameters:
+    - name: _id
+      in: path
+      description: Parameter _id as a params field
+      schema: 
+       type: objectId
+       example: 6575ff7c928979300b6853f9
+   requestBody:
+    required: true
+    content:
+     application/json:
+      schema: 
+       $ref: '#/components/schemas/postData' # <------
+   responses:
+    '200': 
+     description: OK
+    '400': 
+     description: BAD REQUEST
+
+# Remove specific post
+  delete:
+   summary: Remove specific post
+   description: API for removing specific post
+   parameters:
+    - name: _id
+      in: path
+      description: Parameter _id as a params field
+      schema: 
+       type: objectId
+       example: 6575ff7c928979300b6853f9
+   responses:
+    '200': 
+     description: OK
+    '400': 
+     description: BAD REQUEST
+
+# Schemas
+components:
+ schemas:
+  postData: 
+   type: object
+   properties:
+    title:
+     type: string,
+     example: USA
+    description:
+     type: string
+     example: United State Of Ame
+    isActive:
+     type: boolean
+     example: true
+   required: 
+    - title
+    - description
+    - isActive
